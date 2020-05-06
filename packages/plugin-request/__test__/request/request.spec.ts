@@ -68,8 +68,23 @@ describe('request', () => {
     });
   });
 
-  test('should pass the correct config', () => {
+  test('post method with data', () => {
+    const data = {
+      username: 'foo'
+    }
+    request.post('/foo', data)
+    return getAjaxRequest().then(req => {
+      expect(JSON.parse(req.params)).toEqual(data)
+    })
+  });
 
+  test('should get the correct configs', () => {
+    request.post('/foo', {}, {
+      timeout: 200
+    })
+    return getAjaxRequest().then(req => {
+      expect(req.timeout).toBe(200)
+    })
   });
 
   test('should return the correct response', (done) => {
